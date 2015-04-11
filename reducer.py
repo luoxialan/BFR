@@ -62,7 +62,7 @@ def combineClustering(cluster1, cluster2):
     return cluster
 
 for line in sys.stdin:
-    line = line.strip()
+    
     data_json = json.loads(line)    
     dataList.append(data_json)       
 

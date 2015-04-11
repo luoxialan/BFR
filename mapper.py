@@ -1,7 +1,7 @@
 import sys
 import json
 
-#file = open("dataset/test.json")
+# file = open("dataset/test.json")
 
 dataList = []       # list to store the data
 
