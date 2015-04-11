@@ -72,7 +72,7 @@ for i in range(0, len(dataList), 1):
         latiFloat = float(dataList[i]["lati"])
         longFloat = float(dataList[i]["long"])
         starsFloat = float(dataList[i]["stars"])
-        scsList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat,longFloat, starsFloat],"points": [dataList[i]]})
+        csList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat,longFloat, starsFloat],"points": [dataList[i]]})
     else:
         cv = []
         added = 0

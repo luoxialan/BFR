@@ -1,5 +1,4 @@
 import json
-import random
 
 file = open("dataset/yelp_academic_dataset_business.json")
 
