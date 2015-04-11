@@ -97,7 +97,7 @@ for i in range(0, len(dataList), 1):
 print ""
 print "Result:"
 for i in range(0, len(csList), 1):
-	print "cluster", i + 1, ":", csList[i]["N"]	
+	print csList[i]
 
 
 
