@@ -1,11 +1,11 @@
 import json
 
-file = open("dataset/yelp_academic_dataset_business.json")
+file = open("dataset/dataset.json")
 
 dataList = []           # list to store the data
 
 mdThreshold = 0.34      # the threshold for MD
-threshold = [6, 8, 9]   # the threshold for Variance, example [1, 2, 3]
+threshold = [4, 5, 0.2]   # the threshold for Variance, example [1, 2, 3]
 csList = []				# example: [{'No':1, 'N': 10, 'SUM':[], 'SUMSQ':[], :, "Points": [] }]
 
 # read the file and transform into the standard format
@@ -96,7 +96,7 @@ for i in range(0, len(dataList), 1):
 print ""
 print "Result:"
 for i in range(0, len(csList), 1):
-	print csList[i]
+	print i+1,csList[i]["N"]
 
 
 

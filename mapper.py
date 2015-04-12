@@ -1,7 +1,7 @@
 import sys
 import json
 
-# file = open("dataset/test.json")
+#file = open("dataset/test.json")
 
 dataList = []       # list to store the data
 
@@ -14,7 +14,7 @@ def getSUMSQ(d):
     return sq
 
 def getVariance(item):
-    v = [] 
+    v = []
     v.append(float(item["SUMSQ"][0])/l["N"] - (float(item["SUM"][0])/l["N"])**2)
     v.append(float(item["SUMSQ"][1])/l["N"] - (float(item["SUM"][1])/l["N"])**2)
     v.append(float(item["SUMSQ"][2])/l["N"] - (float(item["SUM"][2])/l["N"])**2)
@@ -25,15 +25,14 @@ def getCombinedVariance(item1, item2):
     s = []
     v = []
     n = item2["N"]
-
     sq.append(getSUMSQ(item1["lati"]) + float(item2["SUMSQ"][0]))
     sq.append(getSUMSQ(item1["long"]) + float(item2["SUMSQ"][1]))
-    sq.append(getSUMSQ(item1["stars"]) + float(item2["SUMSQ"][2]))  
-    
+    sq.append(getSUMSQ(item1["stars"]) + float(item2["SUMSQ"][2]))
+
     s.append(float(item1["lati"]) + item2["SUM"][0])
     s.append(float(item1["long"]) + item2["SUM"][1])
     s.append(float(item1["stars"]) + item2["SUM"][2])
-    
+
     v.append(float(sq[0])/(n+1) - (float(s[0])/(n + 1))**2)
     v.append(float(sq[1])/(n+1) - (float(s[1])/(n + 1))**2)
     v.append(float(sq[2])/(n+1) - (float(s[2])/(n + 1))**2)
@@ -48,10 +47,11 @@ def check(item, threshold):
             return result
     return result
 
+
 def addToCS(item, cluster):
     cluster["SUMSQ"][0] = float(cluster["SUMSQ"][0]) + getSUMSQ(item["lati"])
     cluster["SUMSQ"][1] = float(cluster["SUMSQ"][1]) + getSUMSQ(item["long"])
-    cluster["SUMSQ"][2] = float(cluster["SUMSQ"][2]) + getSUMSQ(item["stars"])  
+    cluster["SUMSQ"][2] = float(cluster["SUMSQ"][2]) + getSUMSQ(item["stars"])
     cluster["SUM"][0] = cluster["SUM"][0] + item["lati"]
     cluster["SUM"][1] = cluster["SUM"][1] + item["long"]
     cluster["SUM"][2] = cluster["SUM"][2] + item["stars"]
@@ -62,19 +62,19 @@ def addToCS(item, cluster):
 # input comes from STDIN (standard input)
 for line in sys.stdin:
     # remove leading and trailing whitespace
-    line = line.strip()
     # convert the str to json format
-    data_json = json.loads(line)    
+    data_json = json.loads(line)
     data = {"id":data_json["business_id"], "long":data_json["longitude"], "lati":data_json["latitude"],"stars":data_json["stars"]}
     # add the dict to the list
-    dataList.append(data)              
+    dataList.append(data)
+          
 
 #while 1:
 #    lines = file.readlines(10000)       # read the file by lines
 #    if not lines:
 #        break                           # break the loop when finishing reading the file
 #    for line in lines:
-#        data_json = json.loads(line)    # convert the str to json format
+#        data_json = json.loads(json.dumps(line))    # convert the str to json format
 #        d = {"id":data_json["business_id"], "long":data_json["longitude"], "lati":data_json["latitude"],"stars":data_json["stars"]}
 #        dataList.append(d)              # add the dicr to the list
 
@@ -90,8 +90,8 @@ for i in range(0, len(dataList), 1):
         cv = []
         added = 0
         for j in range(0, len(csList), 1):
-            cv = getCombinedVariance(dataList[i], csList[j])    
-                        
+            cv = getCombinedVariance(dataList[i], csList[j])
+
             if check(cv, threshold):
                 #print cv
                 csList[j] = addToCS(dataList[i], csList[j])
@@ -105,4 +105,5 @@ for i in range(0, len(dataList), 1):
 
 for i in range(0, len(csList), 1):
     print csList[i]
+
 
