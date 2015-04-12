@@ -66,18 +66,16 @@ def combineClustering(cluster1, cluster2):
 
 for line in sys.stdin:
     #data_json = json.loads(json.dumps(line))    
-    print type(line)
+    
     l = {}
     l = ast.literal_eval(line)
-    print type(l)
-    print l
+    
     dataList.append(l)
 
 for i in range(0, len(dataList), 1):
     if len(csList) == 0:
         csList.append(dataList[i])
-
-     else:
+    else:
         cv = []
         added = 0
         for j in range(0, len(csList), 1):
