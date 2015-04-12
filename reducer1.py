@@ -65,10 +65,10 @@ def combineClustering(cluster1, cluster2):
     return cluster2
 
 for line in sys.stdin:
-    #data_json = json.loads(json.dumps(line))    
+    #data_json = json.loads(json.dumps(line))   
+    data, count = line.split('\t', 1)
     l = {}
-    l = ast.literal_eval(line)
-    
+    l = ast.literal_eval(data)
     dataList.append(l)
 
 for i in range(0, len(dataList), 1):
@@ -95,7 +95,7 @@ for i in range(0, len(csList), 1):
         csSet.append(csList[i])
 
 for i in range(0, len(csSet), 1):
-    print csSet[i]
+    print '%s\t%s' % (csSet[i]["points"], csSet[i]["N"] )
 
 
 

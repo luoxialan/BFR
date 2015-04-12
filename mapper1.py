@@ -1,5 +1,7 @@
 import sys
 import json
+import ast
+
 
 #file = open("dataset/test.json")
 
@@ -66,44 +68,29 @@ for line in sys.stdin:
     data_json = json.loads(line)
     data = {"id":data_json["business_id"], "long":data_json["longitude"], "lati":data_json["latitude"],"stars":data_json["stars"]}
     # add the dict to the list
-    dataList.append(data)
-          
-
-#while 1:
-#    lines = file.readlines(10000)       # read the file by lines
-#    if not lines:
-#        break                           # break the loop when finishing reading the file
-#    for line in lines:
-#        data_json = json.loads(json.dumps(line))    # convert the str to json format
-#        d = {"id":data_json["business_id"], "long":data_json["longitude"], "lati":data_json["latitude"],"stars":data_json["stars"]}
-#        dataList.append(d)              # add the dicr to the list
-
-#print "The number of items:", len(dataList)
-
-for i in range(0, len(dataList), 1):
+        
     if len(csList) == 0:
-        latiFloat = float(dataList[i]["lati"])
-        longFloat = float(dataList[i]["long"])
-        starsFloat = float(dataList[i]["stars"])
-        csList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat,longFloat, starsFloat],"points": [{"id":dataList[i]["id"]}]})
+        latiFloat = float(data["lati"])
+        longFloat = float(data["long"])
+        starsFloat = float(data["stars"])
+        csList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat,longFloat, starsFloat],"points": [{"id":data["id"]}]})
     else:
         cv = []
         added = 0
         for j in range(0, len(csList), 1):
-            cv = getCombinedVariance(dataList[i], csList[j])
+            cv = getCombinedVariance(data, csList[j])
 
             if check(cv, threshold):
                 #print cv
-                csList[j] = addToCS(dataList[i], csList[j])
+                csList[j] = addToCS(data, csList[j])
                 added = 1
                 break
         if added == 0:
-            latiFloat = float(dataList[i]["lati"])
-            longFloat = float(dataList[i]["long"])
-            starsFloat = float(dataList[i]["stars"])
-            csList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat, longFloat, starsFloat],"points": [{"id":dataList[i]["id"]}]})
+            latiFloat = float(data["lati"])
+            longFloat = float(data["long"])
+            starsFloat = float(data["stars"])
+            csList.append({"N":1, "SUMSQ":[latiFloat**2, longFloat**2, starsFloat**2],"SUM":[latiFloat, longFloat, starsFloat],"points": [{"id":data["id"]}]})
 
 for i in range(0, len(csList), 1):
-    print csList[i]
-
-
+    print "%s\t%s" % (csList[i], 1)
+    
